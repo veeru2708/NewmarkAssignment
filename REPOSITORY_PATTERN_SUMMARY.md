@@ -58,15 +58,6 @@ Successfully implemented the Repository pattern for the Newmark Real Estate Port
 - Repository can be extended for other data operations
 - Service layer ready for complex business rules
 
-## Dependencies Registered
-```csharp
-// Repository layer for data access
-builder.Services.AddScoped<IPropertyRepository, BlobPropertyRepository>();
-
-// Service layer for business logic  
-builder.Services.AddScoped<IPropertyService, PropertyService>();
-```
-
 ## Key Features
 - ✅ Azure Blob Storage integration
 - ✅ Fallback mock data for development
