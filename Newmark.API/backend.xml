@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Newmark.API</name>
+    </assembly>
+    <members>
+        <member name="T:Newmark.API.Controllers.PropertiesController">
+            <summary>
+            RESTful API controller for managing real estate property data
+            Follows clean architecture principles with proper separation of concerns
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Controllers.PropertiesController.#ctor(Newmark.API.Services.IServices.IPropertyService,Microsoft.Extensions.Logging.ILogger{Newmark.API.Controllers.PropertiesController})">
+            <summary>
+            Initializes a new instance of the PropertiesController
+            </summary>
+            <param name="propertyService">Service for property business operations</param>
+            <param name="logger">Logger instance</param>
+        </member>
+        <member name="M:Newmark.API.Controllers.PropertiesController.GetProperties">
+            <summary>
+            Gets all properties from Azure Blob Storage
+            </summary>
+            <returns>A collection of properties with their spaces and rent roll data</returns>
+            <response code="200">Returns the property data successfully</response>
+            <response code="500">If there was an error retrieving the data</response>
+        </member>
+        <member name="M:Newmark.API.Controllers.PropertiesController.GetProperty(System.String)">
+            <summary>
+            Gets a specific property by its unique identifier
+            </summary>
+            <param name="id">The unique identifier of the property</param>
+            <returns>The property with the specified ID</returns>
+            <response code="200">Returns the property data successfully</response>
+            <response code="404">If the property with the specified ID is not found</response>
+            <response code="500">If there was an error retrieving the data</response>
+        </member>
+        <member name="M:Newmark.API.Controllers.PropertiesController.GetPropertySpaces(System.String)">
+            <summary>
+            Gets spaces for a specific property
+            </summary>
+            <param name="propertyId">The unique identifier of the property</param>
+            <returns>A collection of spaces for the specified property</returns>
+            <response code="200">Returns the spaces data successfully</response>
+            <response code="404">If the property with the specified ID is not found</response>
+            <response code="500">If there was an error retrieving the data</response>
+        </member>
+        <member name="T:Newmark.API.Middleware.RequestResponseLoggingMiddleware">
+            <summary>
+            Middleware for logging HTTP requests and responses
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Middleware.RequestResponseLoggingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Newmark.API.Middleware.RequestResponseLoggingMiddleware})">
+            <summary>
+            Initializes a new instance of the RequestResponseLoggingMiddleware
+            </summary>
+            <param name="next">The next middleware in the pipeline</param>
+            <param name="logger">Logger instance</param>
+        </member>
+        <member name="M:Newmark.API.Middleware.RequestResponseLoggingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes the middleware to log request and response information
+            </summary>
+            <param name="context">The HTTP context</param>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
+        <member name="M:Newmark.API.Middleware.RequestResponseLoggingMiddleware.LogRequestAsync(Microsoft.AspNetCore.Http.HttpContext,System.String)">
+            <summary>
+            Logs HTTP request information
+            </summary>
+            <param name="context">The HTTP context</param>
+            <param name="requestId">Unique request identifier</param>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
+        <member name="M:Newmark.API.Middleware.RequestResponseLoggingMiddleware.LogResponseAsync(Microsoft.AspNetCore.Http.HttpContext,System.String,System.Int64,System.IO.MemoryStream)">
+            <summary>
+            Logs HTTP response information
+            </summary>
+            <param name="context">The HTTP context</param>
+            <param name="requestId">Unique request identifier</param>
+            <param name="elapsedMilliseconds">Time taken to process the request</param>
+            <param name="responseBodyStream">Response body stream</param>
+            <returns>A task representing the asynchronous operation</returns>
+        </member>
+        <member name="T:Newmark.API.Middleware.RequestResponseLoggingMiddlewareExtensions">
+            <summary>
+            Extension methods for adding the RequestResponseLoggingMiddleware
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Middleware.RequestResponseLoggingMiddlewareExtensions.UseRequestResponseLogging(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds the RequestResponseLoggingMiddleware to the application pipeline
+            </summary>
+            <param name="builder">The application builder</param>
+            <returns>The application builder</returns>
+        </member>
+        <member name="T:Newmark.API.Models.ErrorResponse">
+            <summary>
+            Represents a standardized error response for API operations
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.ErrorResponse.Title">
+            <summary>
+            A short, human-readable summary of the error
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.ErrorResponse.Status">
+            <summary>
+            The HTTP status code associated with this error
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.ErrorResponse.Detail">
+            <summary>
+            A detailed description of the error
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.ErrorResponse.TraceId">
+            <summary>
+            A unique identifier for this error occurrence
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.ErrorResponse.Timestamp">
+            <summary>
+            The timestamp when the error occurred
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Models.ErrorResponse.#ctor">
+            <summary>
+            Creates a new ErrorResponse with default values
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Models.ErrorResponse.#ctor(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Creates a new ErrorResponse with specified values
+            </summary>
+            <param name="title">The error title</param>
+            <param name="status">The HTTP status code</param>
+            <param name="detail">The error detail</param>
+            <param name="traceId">Optional trace ID</param>
+        </member>
+        <member name="M:Newmark.API.Models.ErrorResponse.InternalServerError(System.String,System.String)">
+            <summary>
+            Creates a 500 Internal Server Error response
+            </summary>
+            <param name="detail">The error detail</param>
+            <param name="traceId">Optional trace ID</param>
+            <returns>An ErrorResponse with status 500</returns>
+        </member>
+        <member name="M:Newmark.API.Models.ErrorResponse.NotFound(System.String,System.String)">
+            <summary>
+            Creates a 404 Not Found Error response
+            </summary>
+            <param name="detail">The error detail</param>
+            <param name="traceId">Optional trace ID</param>
+            <returns>An ErrorResponse with status 404</returns>
+        </member>
+        <member name="M:Newmark.API.Models.ErrorResponse.BadRequest(System.String,System.String)">
+            <summary>
+            Creates a 400 Bad Request Error response
+            </summary>
+            <param name="detail">The error detail</param>
+            <param name="traceId">Optional trace ID</param>
+            <returns>An ErrorResponse with status 400</returns>
+        </member>
+        <member name="T:Newmark.API.Models.Property">
+            <summary>
+            Represents a real estate property with all its details
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Id">
+            <summary>
+            Unique identifier for the property
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Name">
+            <summary>
+            Display name of the property
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Address">
+            <summary>
+            Physical address of the property (not present in current JSON, keeping for future use)
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Features">
+            <summary>
+            List of property features and amenities
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Highlights">
+            <summary>
+            List of property highlights and selling points
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Transportation">
+            <summary>
+            List of available transportation options near the property
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Property.Spaces">
+            <summary>
+            List of rentable spaces within the property
+            </summary>
+        </member>
+        <member name="T:Newmark.API.Models.TransportationInfo">
+            <summary>
+            Represents transportation information for a property
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.TransportationInfo.Type">
+            <summary>
+            Type of transportation (e.g., "Subway", "Bus", "Train", "Bike Share")
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.TransportationInfo.Line">
+            <summary>
+            Name of the transportation line (e.g., "Green Line", "Route 15")
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.TransportationInfo.Station">
+            <summary>
+            Station name for bike share or other transportation
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.TransportationInfo.Distance">
+            <summary>
+            Distance from the property to the transportation option
+            </summary>
+        </member>
+        <member name="T:Newmark.API.Models.Space">
+            <summary>
+            Represents a rentable space within a property
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Space.Id">
+            <summary>
+            Unique identifier for the space
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Space.Name">
+            <summary>
+            Display name of the space
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Space.Type">
+            <summary>
+            Type of space (e.g., Office, Warehouse, Retail) - not in current JSON but keeping for future use
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Space.Size">
+            <summary>
+            Size of the space in square feet - not in current JSON but keeping for future use
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.Space.RentRoll">
+            <summary>
+            Historical rent roll data for the space
+            </summary>
+        </member>
+        <member name="T:Newmark.API.Models.RentRoll">
+            <summary>
+            Represents rent information for a specific month
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.RentRoll.Month">
+            <summary>
+            Month abbreviation (e.g., "Jan", "Feb", "Mar")
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.RentRoll.Year">
+            <summary>
+            Year of the rent record - not in current JSON but keeping for future use
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.RentRoll.Rent">
+            <summary>
+            Rent amount for the specified month
+            </summary>
+        </member>
+        <member name="T:Newmark.API.Models.PropertiesResponse">
+            <summary>
+            Response model containing a collection of properties
+            </summary>
+        </member>
+        <member name="P:Newmark.API.Models.PropertiesResponse.Properties">
+            <summary>
+            Collection of properties
+            </summary>
+        </member>
+        <member name="T:Newmark.API.Repositories.BlobPropertyRepository">
+            <summary>
+            Azure Blob Storage implementation of the property repository
+            Handles all data access operations for properties stored in Azure Blob Storage
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Repositories.BlobPropertyRepository.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Logging.ILogger{Newmark.API.Repositories.BlobPropertyRepository})">
+            <summary>
+            Initializes a new instance of the BlobPropertyRepository
+            </summary>
+            <param name="configuration">Configuration containing Azure Blob Storage settings</param>
+            <param name="logger">Logger instance for diagnostics</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when configuration or logger is null</exception>
+        </member>
+        <member name="M:Newmark.API.Repositories.BlobPropertyRepository.GetAllPropertiesAsync">
+            <summary>
+            Retrieves all properties from Azure Blob Storage asynchronously
+            </summary>
+            <returns>A collection of properties, or null if retrieval fails</returns>
+        </member>
+        <member name="M:Newmark.API.Repositories.BlobPropertyRepository.GetPropertyByIdAsync(System.String)">
+            <summary>
+            Retrieves a specific property by its identifier asynchronously
+            </summary>
+            <param name="propertyId">The unique identifier of the property</param>
+            <returns>The property if found, null otherwise</returns>
+        </member>
+        <member name="M:Newmark.API.Repositories.BlobPropertyRepository.IsHealthyAsync">
+            <summary>
+            Checks if the Azure Blob Storage data source is available and accessible
+            </summary>
+            <returns>True if the data source is healthy, false otherwise</returns>
+        </member>
+        <member name="M:Newmark.API.Repositories.BlobPropertyRepository.GetMockProperties">
+            <summary>
+            Provides mock data for development and testing purposes
+            This method should only be used as a fallback when blob access fails
+            </summary>
+            <returns>A collection of mock properties</returns>
+        </member>
+        <member name="T:Newmark.API.Repositories.IRepositories.IPropertyRepository">
+            <summary>
+            Repository interface for property data access operations
+            Provides a clean abstraction layer over data access logic
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Repositories.IRepositories.IPropertyRepository.GetAllPropertiesAsync">
+            <summary>
+            Retrieves all properties from the data source asynchronously
+            </summary>
+            <returns>A collection of properties, or null if retrieval fails</returns>
+        </member>
+        <member name="M:Newmark.API.Repositories.IRepositories.IPropertyRepository.GetPropertyByIdAsync(System.String)">
+            <summary>
+            Retrieves a specific property by its identifier asynchronously
+            </summary>
+            <param name="propertyId">The unique identifier of the property</param>
+            <returns>The property if found, null otherwise</returns>
+        </member>
+        <member name="M:Newmark.API.Repositories.IRepositories.IPropertyRepository.IsHealthyAsync">
+            <summary>
+            Checks if the data source is available and accessible
+            </summary>
+            <returns>True if the data source is healthy, false otherwise</returns>
+        </member>
+        <member name="T:Newmark.API.Services.IServices.IPropertyService">
+            <summary>
+            Interface for property business logic and operations
+            Provides business-level operations for property management
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Services.IServices.IPropertyService.GetAllPropertiesAsync">
+            <summary>
+            Retrieves all properties with business logic applied
+            </summary>
+            <returns>Properties response containing all property data, or null if retrieval failed</returns>
+        </member>
+        <member name="M:Newmark.API.Services.IServices.IPropertyService.GetPropertyByIdAsync(System.String)">
+            <summary>
+            Retrieves a specific property by its identifier
+            </summary>
+            <param name="propertyId">The unique identifier of the property</param>
+            <returns>The property if found, null otherwise</returns>
+        </member>
+        <member name="M:Newmark.API.Services.IServices.IPropertyService.IsServiceHealthyAsync">
+            <summary>
+            Checks if the property data source is healthy and accessible
+            </summary>
+            <returns>True if the service is healthy, false otherwise</returns>
+        </member>
+        <member name="T:Newmark.API.Services.PropertyService">
+            <summary>
+            Service implementation for property business logic and operations
+            Acts as a bridge between controllers and repository layer
+            Handles business logic, validation, and orchestration of property operations
+            </summary>
+        </member>
+        <member name="M:Newmark.API.Services.PropertyService.#ctor(Newmark.API.Repositories.IRepositories.IPropertyRepository,Microsoft.Extensions.Logging.ILogger{Newmark.API.Services.PropertyService})">
+            <summary>
+            Initializes a new instance of the PropertyService
+            </summary>
+            <param name="propertyRepository">Repository for property data access</param>
+            <param name="logger">Logger instance for diagnostics</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when repository or logger is null</exception>
+        </member>
+        <member name="M:Newmark.API.Services.PropertyService.GetAllPropertiesAsync">
+            <summary>
+            Retrieves all properties with business logic applied
+            </summary>
+            <returns>Properties response containing all property data, or null if retrieval failed</returns>
+        </member>
+        <member name="M:Newmark.API.Services.PropertyService.GetPropertyByIdAsync(System.String)">
+            <summary>
+            Retrieves a specific property by its identifier
+            </summary>
+            <param name="propertyId">The unique identifier of the property</param>
+            <returns>The property if found, null otherwise</returns>
+        </member>
+        <member name="M:Newmark.API.Services.PropertyService.IsServiceHealthyAsync">
+            <summary>
+            Checks if the property data source is healthy and accessible
+            </summary>
+            <returns>True if the service is healthy, false otherwise</returns>
+        </member>
+    </members>
+</doc>
