@@ -1,10 +1,5 @@
 // API service layer for centralized API calls
-export interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+
 
 export interface TransportationInfo {
   Type: string;
@@ -46,16 +41,6 @@ class ApiService {
 
   constructor() {
     this.baseUrl = process.env.REACT_APP_API_URL || 'https://localhost:7209';
-  }
-
-  async getWeatherForecast(): Promise<WeatherForecast[]> {
-    const response = await fetch(`${this.baseUrl}/api/weather/forecast`);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    return response.json();
   }
 
   async getProperties(): Promise<PropertiesResponse> {
