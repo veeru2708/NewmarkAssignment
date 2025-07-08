@@ -85,14 +85,3 @@ npm start
 #### Application URLs
 - **Backend API**: `https://localhost:7209` (HTTPS with Swagger UI)
 - **Frontend Web**: `http://localhost:3000` (HTTP - opens automatically)
-
-
-### Available Scripts (Newmark.Web)
-
-In the Newmark.Web directory, you can run:
-
-#### `npm start`
-Runs the React app in development mode at [http://localhost:3000](http://localhost:3000).
-The page reloads automatically when you make edits, and lint errors appear in the console.
-
-
