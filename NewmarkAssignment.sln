@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newmark.API", "Newmark.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newmark.API.Tests", "Newmark.API.Tests\Newmark.API.Tests.csproj", "{29613B97-9253-4E08-85AC-13C8EEC24C1F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Newmark.Web", "Newmark.Web", "{F5F75F8B-9F9A-4F8A-9F8A-9F8A9F8A9F8A}"
+	ProjectSection(SolutionItems) = preProject
+		Newmark.Web\package.json = Newmark.Web\package.json
+		Newmark.Web\README.md = Newmark.Web\README.md
+		Newmark.Web\tsconfig.json = Newmark.Web\tsconfig.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

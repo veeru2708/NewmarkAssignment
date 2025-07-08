@@ -3,35 +3,41 @@
 # Full-Stack Application: .NET Web API + React TypeScript
 
 This workspace contains a full-stack web application with:
-- **Backend**: .NET 8 Web API (in `backend/` folder)
-- **Frontend**: React TypeScript application (in `frontend/` folder)
+- **Backend**: .NET 8 Web API (Newmark.API folder)
+- **Frontend**: React TypeScript application (Newmark.Web folder)
 
-## Architecture Guidelines
+## Quick Reference
 
-### Backend (.NET Web API)
-- Use minimal APIs for simple endpoints
-- Follow RESTful conventions
-- Use dependency injection for services
-- Implement proper error handling and logging
-- Use Data Transfer Objects (DTOs) for API responses
-- Configure CORS for frontend communication
+📖 **Complete Documentation**: See the main [README.md](../README.md) for comprehensive setup, architecture, and development guidelines.
 
-### Frontend (React TypeScript)
-- Use functional components with hooks
-- Implement proper TypeScript interfaces for API responses
-- Use async/await for API calls
-- Handle loading states and error scenarios
-- Follow React best practices and conventions
+📋 **Architecture Summary**: See [REPOSITORY_PATTERN_SUMMARY.md](../REPOSITORY_PATTERN_SUMMARY.md) for detailed implementation patterns.
+
+## Key Architecture Guidelines
+
+### Backend (Newmark.API - .NET Web API)
+- **Repository Pattern**: Use IPropertyRepository and IPropertyService interfaces
+- **Clean Architecture**: Separation of concerns with repository, service, and controller layers
+- **Dependency Injection**: Scoped services for all layers
+- **RESTful Conventions**: Proper HTTP status codes and error responses
+- **Structured Logging**: Comprehensive logging throughout all operations
+- **Error Handling**: Graceful fallback with detailed error information
+
+### Frontend (Newmark.Web - React TypeScript)  
+- **Custom CSS**: Use component-specific CSS files - no external frameworks
+- **Functional Components**: React hooks with proper TypeScript interfaces
+- **Async/Await**: Proper error handling for all API calls
+- **Loading States**: User-friendly indicators and state management
+- **Component Architecture**: Hierarchical display patterns
 
 ### API Communication
-- Backend runs on `https://localhost:7209` (HTTPS)
-- Frontend runs on `http://localhost:3000` 
-- CORS is configured to allow frontend-backend communication
-- Use proper HTTP status codes and error handling
+- **Backend**: `https://localhost:7209` (HTTPS) with CORS configuration
+- **Frontend**: `http://localhost:3000` (HTTP) with structured error handling
+- **Data Flow**: Repository → Service → Controller → Frontend Service → Components
 
-## Development Guidelines
-- Keep backend and frontend code separate
-- Use TypeScript for type safety in frontend
-- Follow C# naming conventions in backend
-- Use meaningful component and service names
-- Implement proper error boundaries and validation
+### Development Standards
+- **Backend**: Follow C# naming conventions and dependency injection patterns
+- **Frontend**: Use meaningful component names with TypeScript interfaces
+- **Testing**: Mock-based unit testing for all service layers
+- **Documentation**: Inline comments and comprehensive error messages
+
+For complete setup instructions, API documentation, troubleshooting, and architectural details, refer to the main [README.md](../README.md) file.

@@ -1,0 +1,31 @@
+.app-container {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.app-header {
+  background-color: #333;
+  padding: 20px;
+  margin-bottom: 0;
+  border-bottom: 3px solid #007acc;
+}
+
+.app-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-title {
+  color: white;
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.app-main {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 100px);
+}

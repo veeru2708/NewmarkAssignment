@@ -1,0 +1,153 @@
+.space-component {
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.space-header {
+  cursor: pointer;
+  padding: 12px;
+}
+
+.space-header.expanded {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.space-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.space-info {
+  flex: 1;
+}
+
+.space-title {
+  margin: 0;
+  color: #007acc;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.space-id {
+  font-size: 12px;
+  color: #666;
+  background-color: #e9ecef;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.space-metrics {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.metric-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.metric-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.metric-value.rent {
+  color: #28a745;
+}
+
+.metric-value.data-points {
+  color: #007acc;
+  font-weight: 500;
+}
+
+.space-expand-icon {
+  margin-left: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+}
+
+.space-details {
+  padding: 12px;
+  background-color: #f8f9fa;
+}
+
+.rent-history-title {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rent-history-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.rent-item {
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rent-item.latest {
+  background-color: #e3f2fd;
+}
+
+.rent-item.regular {
+  background-color: #ffffff;
+}
+
+.rent-period {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rent-period.latest {
+  color: #007acc;
+}
+
+.rent-period.regular {
+  color: #666;
+}
+
+.latest-badge {
+  margin-left: 6px;
+  background-color: #007acc;
+  color: white;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 10px;
+}
+
+.rent-amount {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rent-amount.latest {
+  color: #007acc;
+}
+
+.rent-amount.regular {
+  color: #28a745;
+}
