@@ -22,15 +22,31 @@ namespace Newmark.API.Repositories
         /// <param name="configuration">Configuration containing Azure Blob Storage settings</param>
         /// <param name="logger">Logger instance for diagnostics</param>
         /// <exception cref="ArgumentNullException">Thrown when configuration or logger is null</exception>
+        /// <exception cref="InvalidOperationException">Thrown when required Azure Blob Storage configuration is missing or empty</exception>
         public BlobPropertyRepository(IConfiguration configuration, ILogger<BlobPropertyRepository> logger)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             
+            // Validate required configuration settings
             _blobUrl = configuration["AzureBlob:BlobUrl"] ?? 
-                      "https://nmrkpidev.blob.core.windows.net/dev-test/devtest.json";
+                      throw new InvalidOperationException("AzureBlob:BlobUrl configuration is missing. Please configure the Azure Blob Storage URL in appsettings.json");
+            
             _sasToken = configuration["AzureBlob:SasToken"] ?? 
-                       "?sp=r&st=2024-10-28T10:35:48Z&se=2025-10-28T18:35:48Z&spr=https&sv=2022-11-02&sr=b&sig=bdeoPWtefikVgUGFCUs4ihsl22ZhQGu4%2B4cAfoMwd4k%3D";
+                       throw new InvalidOperationException("AzureBlob:SasToken configuration is missing. Please configure the Azure Blob Storage SAS token in appsettings.json");
+
+            // Validate that the configurations are not empty
+            if (string.IsNullOrWhiteSpace(_blobUrl))
+            {
+                throw new InvalidOperationException("AzureBlob:BlobUrl configuration cannot be empty. Please provide a valid Azure Blob Storage URL in appsettings.json");
+            }
+
+            if (string.IsNullOrWhiteSpace(_sasToken))
+            {
+                throw new InvalidOperationException("AzureBlob:SasToken configuration cannot be empty. Please provide a valid Azure Blob Storage SAS token in appsettings.json");
+            }
+
+            _logger.LogInformation("BlobPropertyRepository initialized with blob URL configured");
         }
 
         /// <summary>

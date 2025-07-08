@@ -300,6 +300,7 @@
             <param name="configuration">Configuration containing Azure Blob Storage settings</param>
             <param name="logger">Logger instance for diagnostics</param>
             <exception cref="T:System.ArgumentNullException">Thrown when configuration or logger is null</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when required Azure Blob Storage configuration is missing or empty</exception>
         </member>
         <member name="M:Newmark.API.Repositories.BlobPropertyRepository.GetAllPropertiesAsync">
             <summary>

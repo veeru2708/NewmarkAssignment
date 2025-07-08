@@ -252,15 +252,16 @@ Builds the React app for production to the `build` folder with optimized bundles
 
 ### Setup Instructions
 
-The application is pre-configured with the following Azure Blob Storage settings:
+The application requires proper Azure Blob Storage configuration to function correctly:
 
 - **Blob URL**: `https://nmrkpidev.blob.core.windows.net/dev-test/devtest.json`
-- **SAS Token**: Configured in `backend/appsettings.json`
+- **SAS Token**: Must be configured in `Newmark.API/appsettings.json`
 - **Authentication**: Read-only access with expiration date
+- **Configuration Validation**: The application will throw `InvalidOperationException` if required settings are missing
 
 ### Configuration Files
 
-#### Backend Configuration (`backend/appsettings.json`)
+#### Backend Configuration (`Newmark.API/appsettings.json`)
 ```json
 {
   "AzureBlob": {
@@ -270,10 +271,7 @@ The application is pre-configured with the following Azure Blob Storage settings
 }
 ```
 
-#### Frontend Configuration (`frontend/.env`)
-```properties
-REACT_APP_API_URL=https://localhost:7209
-```
+**Important**: Both `BlobUrl` and `SasToken` are **required** configuration values. The application will fail to start if these are missing or empty, preventing accidental use of hardcoded values.
 
 ### Error Handling
 
@@ -281,6 +279,13 @@ If Azure Blob Storage is unavailable or the SAS token is expired, the applicatio
 1. Log the error with detailed information
 2. Return mock property data to demonstrate the UI functionality
 3. Display appropriate error messages to users
+
+### Configuration Validation
+
+The `BlobPropertyRepository` performs strict validation on startup:
+- **Missing Configuration**: Throws `InvalidOperationException` with clear error messages
+- **Empty Values**: Validates that configuration values are not null or whitespace
+- **Security**: Prevents hardcoded credentials and enforces proper configuration management
 
 ### Mock Data Fallback
 
